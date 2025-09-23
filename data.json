@@ -1,0 +1,65 @@
+{
+    "lastUpdated": "2024-01-20",
+    "sections": [
+        {
+            "title": "📊 Tea Production Summary",
+            "icon": "fas fa-seedling",
+            "items": [
+                "Today's Target: 1,500 kg",
+                "Current Production: 1,200 kg",
+                "Quality Rating: 98.5%",
+                "Team Performance: Excellent"
+            ],
+            "stats": [
+                {"label": "Leaves Processed", "value": "1,200kg"},
+                {"label": "Quality Score", "value": "98.5%"},
+                {"label": "Team Present", "value": "24/25"}
+            ]
+        },
+        {
+            "title": "👥 Team Attendance",
+            "icon": "fas fa-users",
+            "items": [
+                "Present Today: 24 team members",
+                "Absent: 1 (Rajesh - Sick Leave)",
+                "Overtime: 3 team members",
+                "Shift A: Complete, Shift B: In Progress"
+            ]
+        },
+        {
+            "title": "⚡ Equipment Status",
+            "icon": "fas fa-cogs",
+            "items": [
+                "Dryer Machine: Operational",
+                "Sorting Line: Running",
+                "Packaging Unit: Normal",
+                "All systems functioning properly"
+            ]
+        },
+        {
+            "title": "📦 Orders & Shipments",
+            "icon": "fas fa-truck",
+            "items": [
+                "Today's Orders: 45 packages",
+                "Pending Shipments: 12",
+                "International: 8 orders",
+                "Domestic: 37 orders"
+            ],
+            "stats": [
+                {"label": "Today's Orders", "value": "45"},
+                {"label": "Pending", "value": "12"},
+                {"label": "Completed", "value": "33"}
+            ]
+        },
+        {
+            "title": "📅 Important Reminders",
+            "icon": "fas fa-bell",
+            "items": [
+                "Quality inspection at 3:00 PM",
+                "Supplier meeting tomorrow 10 AM",
+                "Monthly maintenance scheduled for Friday",
+                "New team training session next week"
+            ]
+        }
+    ]
+}

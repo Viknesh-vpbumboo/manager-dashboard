@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1><i class="fas fa-chart-line"></i> Daily Manager Dashboard</h1>
+            <div class="date-info">
+                <span id="current-date"></span>
+                <span id="current-time"></span>
+            </div>
+        </header>
+
+        <div class="scrolling-content">
+            <!-- Content will be loaded from data.json -->
+            <div id="content-container"></div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <p>Auto-updates daily • Next refresh: <span id="next-refresh"></span></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
