@@ -122,3 +122,21 @@ function initDashboard() {
 
 // Start when page loads
 document.addEventListener('DOMContentLoaded', initDashboard);
+// For Excel Online files
+const EXCEL_ONLINE_URL =https://docs.google.com/spreadsheets/d/1aXGoSMNhxMunx1B2Dk6Q2XP9V8Ve7oyV/edit?usp=drive_link&ouid=118192161936633411383&rtpof=true&sd=true;
+
+async function loadExcelOnlineData() {
+    try {
+        // Convert OneDrive link to direct download link
+        const directLink = EXCEL_ONLINE_URL.replace('/edit', '/export?format=xlsx');
+        
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(directLink)}`);
+        const data = await response.json();
+        
+        // Process Excel data (you might need SheetJS library for this)
+        processExcelData(data.contents);
+    } catch (error) {
+        console.error('Error loading Excel data:', error);
+    }
+}
+
