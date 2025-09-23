@@ -1,3 +1,6 @@
+// Configuration - UPDATE THIS WITH YOUR GOOGLE SHEETS LINK
+const GOOGLE_SHEETS_URL = "YOUR_GOOGLE_SHEETS_PUBLISHED_LINK_HERE";
+
 // Update date and time
 function updateDateTime() {
     const now = new Date();
@@ -11,21 +14,58 @@ function updateDateTime() {
     
     document.getElementById('current-time').textContent = 
         now.toLocaleTimeString('en-US');
-    
-    // Set next refresh time (24 hours from now)
-    const nextRefresh = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    document.getElementById('next-refresh').textContent = 
-        nextRefresh.toLocaleString();
 }
 
-// Load dashboard data
-async function loadDashboardData() {
+// Convert CSV from Google Sheets to JSON
+function csvToJson(csv) {
+    const lines = csv.split('\n');
+    const headers = lines[0].split(',').map(h => h.trim());
+    
+    const sections = [];
+    let currentSection = null;
+    
+    for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim());
+        if (values.length === 1 && !values[0]) continue; // Skip empty lines
+        
+        // Check if this is a section header (starts with ##)
+        if (values[0] && values[0].startsWith('##')) {
+            if (currentSection) sections.push(currentSection);
+            currentSection = {
+                title: values[0].replace('##', '').trim(),
+                icon: values[1] || 'fas fa-chart-bar',
+                items: [],
+                stats: []
+            };
+        } 
+        // Check if this is a stat item (starts with &&)
+        else if (values[0] && values[0].startsWith('&&')) {
+            if (currentSection) {
+                currentSection.stats.push({
+                    label: values[0].replace('&&', '').trim(),
+                    value: values[1] || ''
+                });
+            }
+        }
+        // Regular item
+        else if (values[0] && currentSection) {
+            currentSection.items.push(values[0]);
+        }
+    }
+    
+    if (currentSection) sections.push(currentSection);
+    return { lastUpdated: new Date().toISOString().split('T')[0], sections };
+}
+
+// Load data from Google Sheets
+async function loadGoogleSheetsData() {
     try {
-        const response = await fetch('data.json');
-        const data = await response.json();
-        displayData(data);
+        const response = await fetch(GOOGLE_SHEETS_URL);
+        const csvData = await response.text();
+        const jsonData = csvToJson(csvData);
+        displayData(jsonData);
     } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('Error loading Google Sheets data:', error);
         displayError();
     }
 }
@@ -40,12 +80,9 @@ function displayData(data) {
             <div class="content-section">
                 <h2><i class="${section.icon}"></i> ${section.title}</h2>
                 <div class="section-content">
-                    ${Array.isArray(section.items) ? 
-                        section.items.map(item => `<p>• ${item}</p>`).join('') : 
-                        section.items
-                    }
+                    ${section.items.map(item => `<p>• ${item}</p>`).join('')}
                 </div>
-                ${section.stats ? `
+                ${section.stats && section.stats.length > 0 ? `
                     <div class="stats-grid">
                         ${section.stats.map(stat => `
                             <div class="stat-item">
@@ -66,7 +103,7 @@ function displayError() {
     container.innerHTML = `
         <div class="content-section" style="text-align: center;">
             <h2>⚠️ Data Loading Error</h2>
-            <p>Please check if data.json file exists and is properly formatted.</p>
+            <p>Please check if Google Sheets URL is correct and published.</p>
         </div>
     `;
 }
@@ -74,13 +111,13 @@ function displayError() {
 // Initialize dashboard
 function initDashboard() {
     updateDateTime();
-    loadDashboardData();
+    loadGoogleSheetsData();
     
     // Update time every second
     setInterval(updateDateTime, 1000);
     
-    // Refresh data every hour
-    setInterval(loadDashboardData, 60 * 60 * 1000);
+    // Refresh data every 5 minutes
+    setInterval(loadGoogleSheetsData, 5 * 60 * 1000);
 }
 
 // Start when page loads
