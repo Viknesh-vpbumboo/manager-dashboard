@@ -136,8 +136,11 @@ async function loadExcelOnlineData() {
         // Process Excel data (you might need SheetJS library for this)
         processExcelData(data.contents);
     } catch (error) {
-        console.error('Error loading Excel data:', error);
+        console.error('Error loading Excel data:', error);// Refresh settings
+setInterval(loadGoogleSheetsData, 5 * 60 * 1000); // Refresh every 5 minutes
+setInterval(() => location.reload(), 24 * 60 * 60 * 1000); // Full reload daily
     }
 }
+
 
 
