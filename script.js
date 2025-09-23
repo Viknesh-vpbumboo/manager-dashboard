@@ -1,5 +1,5 @@
 // Configuration - UPDATE THIS WITH YOUR GOOGLE SHEETS LINK
-const GOOGLE_SHEETS_URL = "YOUR_GOOGLE_SHEETS_PUBLISHED_LINK_HERE";
+const GOOGLE_SHEETS_URL = "YOUR_GOOhttps://docs.google.com/spreadsheets/d/1aXGoSMNhxMunx1B2Dk6Q2XP9V8Ve7oyV/edit?usp=sharing&ouid=118192161936633411383&rtpof=true&sd=true;
 
 // Update date and time
 function updateDateTime() {
@@ -139,4 +139,5 @@ async function loadExcelOnlineData() {
         console.error('Error loading Excel data:', error);
     }
 }
+
 
